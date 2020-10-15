@@ -1,0 +1,21 @@
+[submodule "roles/role_app_acs_mgmt"]
+	path = roles/role_app_acs_mgmt
+	url = git@github.com:steuerfrau/role_app_acs_mgmt.git
+[submodule "roles/role_mod_repositories"]
+	path = roles/role_mod_repositories
+	url = git@github.com:steuerfrau/role_mod_repositories.git
+[submodule "roles/role_mod_selinux"]
+	path = roles/role_mod_selinux
+	url = git@github.com:steuerfrau/role_mod_selinux.git
+[submodule "roles/role_hv_kvm"]
+	path = roles/role_hv_kvm
+	url = git@github.com:steuerfrau/role_hv_kvm.git
+[submodule "roles/role_hv_kvm_acs_agent"]
+	path = roles/role_hv_kvm_acs_agent
+	url = git@github.com:steuerfrau/role_hv_kvm_acs_agent.git
+[submodule "roles/role_app_nfs"]
+	path = roles/role_app_nfs
+	url = git@github.com:steuerfrau/role_app_nfs.git
+[submodule "roles/role_app_mysql"]
+	path = roles/role_app_mysql
+	url = git@github.com:steuerfrau/role_app_mysql.git
