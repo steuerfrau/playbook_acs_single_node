@@ -1,0 +1,7 @@
+---
+- hosts: all
+  roles:
+    - role_hv_kvm_acs_agent
+    - role_app_nfs
+    - role_app_mysql
+    - role_app_acs_mgmt
