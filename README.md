@@ -12,7 +12,7 @@ Implements the guides from
 Needs a baseinstall according to my "playbook_baseinstall".
 
 Needs two Linux bridges installed (not OpenVSwitch) using:
-'''
+```
 [root@acs-mgmt ~]# more /etc/sysconfig/network-scripts/ifcfg-eth* /etc/sysconfig/network-scripts/ifcfg-cloudbr*
 ::::::::::::::
 /etc/sysconfig/network-scripts/ifcfg-eth0
@@ -58,7 +58,7 @@ IPV6INIT=no
 IPV6_AUTOCONF=no
 DELAY=5
 STP=yes
-'''
+```
 ### Necessary Roles
 The following roles are linked as submodules and necessary for this playbook.
 
@@ -72,10 +72,10 @@ The following roles are linked as submodules and necessary for this playbook.
 
 ## Necessary Variables
 
-'''
+```
 role_app_nfs_exports:
   /export/secondary: "*(rw,async,no_root_squash,no_subtree_check)"
   /export/primary: "*(rw,async,no_root_squash,no_subtree_check)"
 
 role_app_mysql_target_version: "5.7"
-'''
+```
