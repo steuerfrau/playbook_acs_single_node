@@ -7,6 +7,12 @@ Implements the guides from
 ## Usage
 
 ## Requirements
+
+## TODO
+
+- role_hv_kvm_acs_agent changes settings in iptables and libvirt configuration set up previously by role_hv_kvm. Check!
+- role_hv_kvm_acs_agent seems to change firewallsettings. Check!
+
 ### Necessary pre-install tasks
 
 Needs a baseinstall according to my "playbook_baseinstall".
