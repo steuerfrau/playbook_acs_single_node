@@ -19,3 +19,6 @@
 [submodule "roles/role_app_mysql"]
 	path = roles/role_app_mysql
 	url = git@github.com:steuerfrau/role_app_mysql.git
+[submodule "inventories"]
+	path = inventories
+	url = git@github.com:steuerfrau/inventories.git

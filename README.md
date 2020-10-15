@@ -72,6 +72,7 @@ The following roles are linked as submodules and necessary for this playbook.
 
 ## Necessary Variables
 
+Unencrypted variables in host_vars/<hostname>/general.yml:
 ```
 role_app_nfs_exports:
   /export/secondary: "*(rw,async,no_root_squash,no_subtree_check)"
@@ -79,3 +80,16 @@ role_app_nfs_exports:
 
 role_app_mysql_target_version: "5.7"
 ```
+
+Passwords encrypted with Ansible-Vault in host_vars/<hostname>/vault_vars.yml:
+```
+role_app_mysql_rootpassword: <MySQL password for user root for setting up MySQL>
+role_app_acs_mgmt_databasepassword: <MySQL password for user root used to configure ACS DBs> # Must be the same as above
+role_app_acs_mgmt_cloudpassword: <MySQL password for user cloud, that is configured during ACS installation.>
+```
+## License
+GNU General Public License v.3.0
+
+## Author Information
+Melanie Desaive, m.desaive@mailbox.org
+
