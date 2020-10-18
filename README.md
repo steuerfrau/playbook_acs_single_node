@@ -22,8 +22,7 @@ For future use the following additional VLANs can be prepared
 - VLAN 21: (optional) Management network
 - VLAN 23: (optional) Storage traffic
 
-The access port is for the management networks an the hypervisor access, if those should be on an untagged network.
-
+In the most simple setup, the access port will carry management, hypervisor access and storage traffic. The VLAN interface the guest traffic and public networks.
 ```
 ovs-vsctl add-br ovsvlan
 ovs-vsctl set port ovsvlan vlan_mode=trunk
@@ -117,18 +116,7 @@ Interface attached successfully
  In VM:
 
 ```
-# more /etc/sysconfig/network-scripts/ifcfg-eth0 /etc/sysconfig/network-scripts/ifcfg-cloudbr0*
-::::::::::::::
-/etc/sysconfig/network-scripts/ifcfg-eth0
-::::::::::::::
-NAME="eth0"
-TYPE=Ethernet
-DEVICE=eth0
-ONBOOT=yes
-HOTPLUG=no
-BOOTPROTO=none
-TYPE=Ethernet
-BRIDGE=cloudbr0
+[root@acs-mgmt ~]# more /etc/sysconfig/network-scripts/ifcfg-*
 ::::::::::::::
 /etc/sysconfig/network-scripts/ifcfg-cloudbr0
 ::::::::::::::
@@ -139,21 +127,40 @@ BOOTPROTO=none
 IPV6INIT=no
 IPV6_AUTOCONF=no
 DELAY=5
+IPADDR=172.16.21.40
+GATEWAY=172.16.21.1
+NETMASK=255.255.255.0
+DNS1=8.8.8.8
 STP=yes
 ::::::::::::::
-/etc/sysconfig/network-scripts/ifcfg-cloudbr0.20
+/etc/sysconfig/network-scripts/ifcfg-cloudbr1
 ::::::::::::::
-DEVICE=cloudbr0.20
-NAME=cloudbr0.20
+DEVICE=cloudbr1
+TYPE=Bridge
+ONBOOT=yes
 BOOTPROTO=none
-ONPARENT=yes
-IPADDR=10.0.100.40
-GATEWAY=10.0.100.1
-PREFIX=24
-VLAN=yes
-DNS1=10.0.100.1
-DNS2=8.8.8.8
-NM_CONTROLLED=no
+IPV6INIT=no
+IPV6_AUTOCONF=no
+DELAY=5
+STP=yes
+::::::::::::::
+/etc/sysconfig/network-scripts/ifcfg-eth0
+::::::::::::::
+DEVICE=eth0
+ONBOOT=yes
+HOTPLUG=no
+BOOTPROTO=none
+TYPE=Ethernet
+BRIDGE=cloudbr0
+::::::::::::::
+/etc/sysconfig/network-scripts/ifcfg-eth1
+::::::::::::::
+DEVICE=eth1
+ONBOOT=yes
+HOTPLUG=no
+BOOTPROTO=none
+TYPE=Ethernet
+BRIDGE=cloudbr1
 ```
 ### Use playbook_baseinstall
 
@@ -166,16 +173,22 @@ Prepare OS with playbook_baseinstall.
 
 ## Usage
 
-### Necessary Roles
-The following roles are linked as submodules and necessary for this playbook.
+```
+ansible-playbook -u root -i inventories/ site.yml --vault-password-file ~/ansible-vault.pass
+```
 
-- role_app_acs_mgmt 
-- role_app_mysql 
-- role_app_nfs 
-- role_hv_kvm 
-- role_hv_kvm_acs_mgmt 
-- role_mod_repositories 
-- role_mod_selinux
+### Setup CloudStack Zone
+
+After installation is finished, connect to http://172.16.21.40:8080/client/ and create a new zone with the following parameters:
+
+- Zone Type: Advanced
+- Setup Zone: {IPv4 DNS1: 8.8.8.8, Internal DNS 1: 8.8.8.8, Hypervisor: KVM}
+- Setup Network: {Physical Network "cloudbr0": Management (edit, KVM traffic label = clodubr0). Physical Network "cloudbr1": Public (label=cloudbr1), Guest (label=cloubr1)
+- Public Traffic: 172.16.22.64 - 172.16.22.127 auf VLAN 22
+- Pod: Needs small portion of management network: 172.16.21.10 - 172.16.21.19
+- Guest Traffic: VLANs 100 - 109
+- Host: 172.16.20.40
+- 
 
 ## Necessary Variables
 
@@ -193,6 +206,7 @@ Passwords encrypted with Ansible-Vault in host_vars/<hostname>/vault_vars.yml:
 role_app_mysql_rootpassword: <MySQL password for user root for setting up MySQL>
 role_app_acs_mgmt_databasepassword: <MySQL password for user root used to configure ACS DBs> # Must be the same as above
 role_app_acs_mgmt_cloudpassword: <MySQL password for user cloud, that is configured during ACS installation.>
+  
 ```
 ## License
 GNU General Public License v.3.0
