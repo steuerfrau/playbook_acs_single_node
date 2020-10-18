@@ -3,20 +3,24 @@
 Install CloudStack with KVM hypervisor on a single node. 
 
 Implements:
-http://docs.cloudstack.apache.org/en/latest/quickinstallationguide/qig.html
-http://docs.cloudstack.apache.org/en/latest/installguide/hypervisor/kvm.html
+
+- http://docs.cloudstack.apache.org/en/latest/quickinstallationguide/qig.html
+- http://docs.cloudstack.apache.org/en/latest/installguide/hypervisor/kvm.html
 
 ## Requirements
 
 ### OVS Setup on Host
 
 Prepare two OpenVSwitch switches, one with a VLAN trunk and one flat/untagged.
+
 The VLANs will be used as following:
+- VLAN 22: Public network
+- VLANs 100-109 for guest traffic.
+
+For future use the following additional VLANs can be prepared
 - VLAN 20: (optional) Hypervisor access
 - VLAN 21: (optional) Management network
-- VLAN 22: Public network
 - VLAN 23: (optional) Storage traffic
-- VLANs 100-109 for guest traffic.
 
 The access port is for the management networks an the hypervisor access, if those should be on an untagged network.
 
@@ -76,7 +80,7 @@ ip link set up ovsflat
 ip addr add 172.16.21.1/24 dev ovsflat
 ```
 
-### Don't forget IP forwarding an a NAt rule
+### Don't Forget IP Forwarding an a NAT Rule
 ```
 echo 1 > /proc/sys/net/ipv4/ip_forward
 
