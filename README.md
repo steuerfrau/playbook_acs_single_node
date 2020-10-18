@@ -2,7 +2,9 @@
 
 Install CloudStack with KVM hypervisor on a single node. 
 
-Implements the guides from
+Implements:
+http://docs.cloudstack.apache.org/en/latest/quickinstallationguide/qig.html
+http://docs.cloudstack.apache.org/en/latest/installguide/hypervisor/kvm.html
 
 ## Requirements
 
