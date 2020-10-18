@@ -187,7 +187,7 @@ After installation is finished, connect to http://172.16.21.40:8080/client/ and 
 - Public Traffic: 172.16.22.64 - 172.16.22.127 auf VLAN 22
 - Pod: Needs small portion of management network: 172.16.21.10 - 172.16.21.19
 - Guest Traffic: VLANs 100 - 109
-- Host: 172.16.20.40
+- Host: 172.16.21.40
 - 
 
 ## Necessary Variables
