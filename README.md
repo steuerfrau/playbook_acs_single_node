@@ -93,10 +93,28 @@ iptables -t nat -I POSTROUTING 1 -s 172.16.1.0/16 \! -d 172.16.1.0/16 -j MASQUER
 - Minimum CPUs 3
 - Minimum Disk 17 GB
 
-Two NICs: 
+#### NICs for VM
 
 - 1st NIC on ovsflat
 - 2nd NIC on ovsvlan
+
+```
+[mel@coco ~]$ sudo virsh attach-interface --domain acs-mgmt --type network --source ovsflat --model virtio --config
+Interface attached successfully
+
+[mel@coco ~]$ sudo virsh attach-interface --domain acs-mgmt --type network --source ovsvlan --model virtio --config
+Interface attached successfully
+
+[mel@coco ~]$ sudo virsh domiflist acs-mgmt
+ Interface   Type      Source    Model    MAC
+-------------------------------------------------------------
+ -           bridge    natbr0    virtio   52:54:00:66:f9:08
+ -           network   ovsflat   virtio   52:54:00:92:3d:f4
+ -           network   ovsvlan   virtio   52:54:00:af:2c:12
+ 
+ # Delete bridge interface using "virsh edit"
+```
+ In VM:
 
 ```
 # more /etc/sysconfig/network-scripts/ifcfg-eth0 /etc/sysconfig/network-scripts/ifcfg-cloudbr0*
@@ -137,7 +155,6 @@ DNS1=10.0.100.1
 DNS2=8.8.8.8
 NM_CONTROLLED=no
 ```
-
 ### Use playbook_baseinstall
 
 Prepare OS with playbook_baseinstall.
