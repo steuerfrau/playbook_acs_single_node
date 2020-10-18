@@ -85,6 +85,10 @@ iptables -t nat -I POSTROUTING 1 -s 172.16.1.0/16 \! -d 172.16.1.0/16 -j MASQUER
 
 ### Prepare VM for ACS Single Node Installation
 
+- Minumum RAM 4,5GB
+- Minimum CPUs 3
+- Minimum Disk 17 GB
+
 Two NICs: 
 
 - 1st NIC on ovsflat
