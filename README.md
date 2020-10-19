@@ -9,6 +9,10 @@ Implements:
 
 ## Requirements
 
+### Nested virtualization on host
+
+Enable nested KVM virtualization on your host.
+
 ### OVS Setup on Host
 
 Prepare two OpenVSwitch switches, one with a VLAN trunk and one flat/untagged.
@@ -91,6 +95,17 @@ iptables -t nat -I POSTROUTING 1 -s 172.16.1.0/16 \! -d 172.16.1.0/16 -j MASQUER
 - Minumum RAM 4,5GB
 - Minimum CPUs 3
 - Minimum Disk 17 GB
+
+Check, if the VM, indeed has virtualization support! 
+
+Enable 
+```
+  <cpu mode='host-model' check='partial'/>
+```
+Check virtualization features with:
+```
+virt-host-validate
+```
 
 #### NICs for VM
 
