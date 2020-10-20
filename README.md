@@ -128,7 +128,7 @@ Interface attached successfully
  
  # Delete bridge interface using "virsh edit"
 ```
- In VM:
+### Interfaces for CentOS 7
 
 ```
 [root@acs-mgmt ~]# more /etc/sysconfig/network-scripts/ifcfg-*
@@ -177,6 +177,23 @@ BOOTPROTO=none
 TYPE=Ethernet
 BRIDGE=cloudbr1
 ```
+### Interfaces for CentOS 8
+
+Das mit nmcli hat nicht funktioniert. Habs dann doch mit networks-scripts gemacht.
+```
+
+    nmcli con delete enp1s0
+    nmcli con add type bridge autoconnect yes con-name cloudbr0  ifname cloudbr0
+    nmcli con add type bridge autoconnect yes con-name cloudbr1  ifname cloudbr1
+    nmcli connection modify cloudbr0 ipv4.addresses 172.16.21.40 ipv4.netmask 255.255.255.0 ipv4.gateway 172.16.21.1 ipv4.dns 8.8.8.8
+    nmcli connection add type bridge-slave autoconnect yes con-name enp1s0 ifname enp1s0 master cloudbr0
+    nmcli connection add type bridge-slave autoconnect yes con-name enp7s0 ifname enp7s0 master cloudbr1
+
+```
+
+```
+
+
 ### Use playbook_baseinstall
 
 Prepare OS with playbook_baseinstall.
